@@ -1,11 +1,10 @@
 package com.serasa.empresa.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Empresa implements Serializable {
@@ -17,23 +16,29 @@ public class Empresa implements Serializable {
 
 	private long id;
 	private String razaoSocial;
-	private String emdereco;
+	private String endereco;
 	private Integer numero;
 	private String bairro;
 	private String telefone;
-	private Date dataCadastro;
+	@Column(name = "data_cadastro")
+	private LocalDate dataCadastro;
+
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn (name= "empresa_id")
+   private  Empresa empresa;
+
+
 
       public  Empresa (){
 
 	  }
-	
-	
-	public Empresa(long id, String razaoSocial, String emdereco, Integer numero, String bairro, String telefone,
-			Date dataCadastro) {
+
+	public Empresa(long id, String razaoSocial, String endereco, Integer numero, String bairro, String telefone, LocalDate dataCadastro) {
 		super();
-		this.id = id;
+      	this.id = id;
 		this.razaoSocial = razaoSocial;
-		this.emdereco = emdereco;
+		this.endereco = endereco;
 		this.numero = numero;
 		this.bairro = bairro;
 		this.telefone = telefone;
@@ -60,12 +65,12 @@ public class Empresa implements Serializable {
 		this.razaoSocial = razaoSocial;
 	}
 
-	public String getEmdereco() {
-		return emdereco;
+	public String getEndereco() {
+		return endereco;
 	}
 
-	public void setEmdereco(String emdereco) {
-		this.emdereco = emdereco;
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
 	}
 
 	public Integer getNumero() {
@@ -92,45 +97,39 @@ public class Empresa implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public Date getDataCadastro() {
+	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
-	}
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Empresa)) return false;
 
+		Empresa empresa = (Empresa) o;
+
+		return getId() == empresa.getId();
+	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Empresa other = (Empresa) obj;
-		if (id != other.id)
-			return false;
-		return true;
+	public int hashCode() {
+		return (int) (getId() ^ (getId() >>> 32));
 	}
-
 
 	@Override
 	public String toString() {
-		return "Empresa [id=" + id + ", razaoSocial=" + razaoSocial + ", emdereco=" + emdereco + ", numero=" + numero
-				+ ", bairro=" + bairro + ", telefone=" + telefone + ", dataCadastro=" + dataCadastro + "]";
+		return "Empresa{" +
+				"id=" + id +
+				", razaoSocial='" + razaoSocial + '\'' +
+				", endereco='" + endereco + '\'' +
+				", numero=" + numero +
+				", bairro='" + bairro + '\'' +
+				", telefone='" + telefone + '\'' +
+				", dataCadastro=" + dataCadastro +
+				'}';
 	}
-	
-	
-	
-
 }

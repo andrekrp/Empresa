@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/empresa")
+
 public class EmpresaResouce{
 	@Autowired
 EmpresaRepository repositorio;
@@ -29,7 +30,7 @@ public List<Empresa> listagemDeEmpresas() {
 }
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Empresa> listagemDeForncedoresPorId(@PathVariable Long id) {
+	public ResponseEntity<Empresa> listagemDeEmpresasPorId(@PathVariable Long id) {
 		Optional<Empresa> optional = repositorio.findById(id);
 
 		return optional.isPresent() ? ResponseEntity.ok(optional.get())
@@ -48,7 +49,7 @@ public ResponseEntity<Empresa> alterar(@PathVariable Long id, @RequestBody Empre
 
 @PostMapping
 @ResponseStatus( HttpStatus.CREATED)
-public void novoFornecedor(@RequestBody Empresa empresa, HttpServletResponse response) {
+public void novaEmpresa(@RequestBody Empresa empresa, HttpServletResponse response) {
 
 	Empresa empresaCriada = repositorio.save(empresa);
 
