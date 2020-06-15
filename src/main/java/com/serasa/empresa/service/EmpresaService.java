@@ -1,12 +1,13 @@
 package com.serasa.empresa.service;
 
+import com.serasa.empresa.model.Empresa;
+import com.serasa.empresa.repository.EmpresaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.serasa.empresa.model.Empresa;
-import com.serasa.empresa.repository.EmpresaRepository;
+import java.util.Optional;
 
 @Service
 public class EmpresaService {
@@ -24,11 +25,12 @@ public class EmpresaService {
 	}
 
 	private Empresa pesquisaEmpresa(Long id) {
-		Empresa empresaPesquisada = repository.findOne(id);
-		if (empresaPesquisada == null) {
+		Optional<Empresa> optional = repository.findById(id);
+		if (!optional.isPresent()) {
 
 			throw new EmptyResultDataAccessException(1);
 		}
+		Empresa empresaPesquisada = optional.get();
 
 		return empresaPesquisada;
 	}

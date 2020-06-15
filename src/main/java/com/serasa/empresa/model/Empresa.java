@@ -4,24 +4,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.xml.crypto.Data;
+import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-public class Empresa   {
+public class Empresa implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+
 	private long id;
 	private String razaoSocial;
 	private String emdereco;
 	private Integer numero;
 	private String bairro;
 	private String telefone;
-	private Data dataCadastro;
+	private Date dataCadastro;
+
+      public  Empresa (){
+
+	  }
 	
 	
 	public Empresa(long id, String razaoSocial, String emdereco, Integer numero, String bairro, String telefone,
-			Data dataCadastro) {
+			Date dataCadastro) {
 		super();
 		this.id = id;
 		this.razaoSocial = razaoSocial;
@@ -32,76 +40,65 @@ public class Empresa   {
 		this.dataCadastro = dataCadastro;
 	}
 
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
 
 	public long getId() {
 		return id;
 	}
 
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
 
 	public String getRazaoSocial() {
 		return razaoSocial;
 	}
 
-
 	public void setRazaoSocial(String razaoSocial) {
 		this.razaoSocial = razaoSocial;
 	}
-
 
 	public String getEmdereco() {
 		return emdereco;
 	}
 
-
 	public void setEmdereco(String emdereco) {
 		this.emdereco = emdereco;
 	}
-
 
 	public Integer getNumero() {
 		return numero;
 	}
 
-
 	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
-
 
 	public String getBairro() {
 		return bairro;
 	}
 
-
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-
 
 	public String getTelefone() {
 		return telefone;
 	}
 
-
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
-
-	public Data getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-
-	public void setDataCadastro(Data dataCadastro) {
+	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-
 
 	@Override
 	public int hashCode() {
